@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+    {{ include('admin/_nav.html.twig') }}
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-sm text-gray-500">Médias</p>
+            <p class="text-3xl font-bold">{{ nbMedias }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-sm text-gray-500">Utilisateurs</p>
+            <p class="text-3xl font-bold">{{ nbUsers }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-sm text-gray-500">Emprunts en cours</p>
+            <p class="text-3xl font-bold text-indigo-600">{{ nbEnCours }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-sm text-gray-500">Emprunts en retard</p>
+            <p class="text-3xl font-bold {{ nbEnRetard > 0 ? 'text-red-600' : 'text-green-600' }}">{{ nbEnRetard }}</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+        <h2 class="text-lg font-semibold mb-4">Médias par type</h2>
+        <ul class="space-y-2">
+            {% for type, nombre in parType %}
+                <li class="flex justify-between border-b pb-2">
+                    <span>{{ type }}</span>
+                    <span class="font-semibold">{{ nombre }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

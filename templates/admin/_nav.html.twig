@@ -1,0 +1,26 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-3xl font-bold">Administration</h1>
+        <p class="text-gray-500">Vue d'ensemble de la bibliothèque</p>
+    </div>
+    <a href="{{ path('app_media_new') }}" class="bg-indigo-600 text-white font-semibold px-5 py-2 rounded-full shadow hover:bg-indigo-700">+ Ajouter un média</a>
+</div>
+
+<nav class="inline-flex flex-wrap gap-1 bg-gray-100 p-1 rounded-full mb-8 text-sm">
+    <a href="{{ path('app_admin') }}"
+       class="px-4 py-2 rounded-full {{ route == 'app_admin' ? 'bg-white shadow font-semibold' : 'text-gray-600 hover:text-gray-900' }}">
+        📊 Tableau de bord
+    </a>
+    <a href="{{ path('app_media_index') }}"
+       class="px-4 py-2 rounded-full {{ route starts with 'app_media' ? 'bg-white shadow font-semibold' : 'text-gray-600 hover:text-gray-900' }}">
+        📚 Médias
+    </a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('app_admin_users') }}"
+           class="px-4 py-2 rounded-full {{ route starts with 'app_admin_users' ? 'bg-white shadow font-semibold' : 'text-gray-600 hover:text-gray-900' }}">
+            👥 Utilisateurs
+        </a>
+    {% endif %}
+</nav>

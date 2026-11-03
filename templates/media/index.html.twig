@@ -3,56 +3,51 @@
 {% block title %}Gestion des médias{% endblock %}
 
 {% block body %}
-    <h1>Gestion des médias</h1>
+    {{ include('admin/_nav.html.twig') }}
 
-    {% for message in app.flashes('success') %}
-        <p style="color: green">{{ message }}</p>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <p style="color: red">{{ message }}</p>
-    {% endfor %}
-
-    <a href="{{ path('app_media_new') }}">Ajouter un média</a>
-
-    <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Type</th>
-                <th>Genre</th>
-                <th>Année</th>
-                <th>Exemplaires</th>
-                <th>Disponibles</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for medium in media %}
-            <tr>
-                <td>
-                    {% if medium.image %}
-                        <img src="{{ asset('uploads/images/' ~ medium.image) }}" alt="{{ medium.titre }}" width="60">
-                    {% endif %}
-                </td>
-                <td>{{ medium.titre }}</td>
-                <td>{{ medium.auteur }}</td>
-                <td>{{ medium.type }}</td>
-                <td>{{ medium.genre }}</td>
-                <td>{{ medium.annee }}</td>
-                <td>{{ medium.exemplaires }}</td>
-                <td>{{ medium.disponibles }}</td>
-                <td>
-                    <a href="{{ path('app_media_show', {'id': medium.id}) }}">Voir</a>
-                    <a href="{{ path('app_media_edit', {'id': medium.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">Aucun média</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="bg-white rounded-xl shadow overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-100 text-left">
+                <tr>
+                    <th class="px-4 py-3">Image</th>
+                    <th class="px-4 py-3">Titre</th>
+                    <th class="px-4 py-3">Auteur</th>
+                    <th class="px-4 py-3">Type</th>
+                    <th class="px-4 py-3">Genre</th>
+                    <th class="px-4 py-3">Année</th>
+                    <th class="px-4 py-3">Dispo / Total</th>
+                    <th class="px-4 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for medium in media %}
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="px-4 py-2">
+                        {% if medium.image %}
+                            <img src="{{ asset('uploads/images/' ~ medium.image) }}" alt="{{ medium.titre }}" class="w-12 h-16 object-cover rounded">
+                        {% else %}
+                            <div class="w-12 h-16 bg-gray-200 rounded"></div>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-2 font-semibold">{{ medium.titre }}</td>
+                    <td class="px-4 py-2">{{ medium.auteur }}</td>
+                    <td class="px-4 py-2">
+                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded">{{ medium.type }}</span>
+                    </td>
+                    <td class="px-4 py-2">{{ medium.genre }}</td>
+                    <td class="px-4 py-2">{{ medium.annee }}</td>
+                    <td class="px-4 py-2">{{ medium.disponibles }} / {{ medium.exemplaires }}</td>
+                    <td class="px-4 py-2 space-x-2">
+                        <a href="{{ path('app_media_show', {'id': medium.id}) }}" class="text-indigo-600 hover:underline">Voir</a>
+                        <a href="{{ path('app_media_edit', {'id': medium.id}) }}" class="text-indigo-600 hover:underline">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="px-4 py-6 text-center text-gray-500">Aucun média</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

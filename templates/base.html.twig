@@ -21,7 +21,7 @@
                     <a href="{{ path('app_home') }}" class="hover:underline">Catalogue</a>
 
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('app_media_index') }}" class="hover:underline">Gestion des médias</a>
+                        <a href="{{ path('app_admin') }}" class="hover:underline">Gestion des médias</a>
                     {% endif %}
 
                     {% if app.user %}
