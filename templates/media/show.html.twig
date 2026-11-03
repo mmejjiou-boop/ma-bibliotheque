@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ medium.titre }}{% endblock %}
+
+{% block body %}
+    <h1>{{ medium.titre }}</h1>
+
+    {% if medium.image %}
+        <img src="{{ asset('uploads/images/' ~ medium.image) }}" alt="{{ medium.titre }}" width="200">
+    {% endif %}
+
+    <table border="1" cellpadding="5">
+        <tbody>
+            <tr><th>Auteur / Réalisateur</th><td>{{ medium.auteur }}</td></tr>
+            <tr><th>Type</th><td>{{ medium.type }}</td></tr>
+            <tr><th>Genre</th><td>{{ medium.genre }}</td></tr>
+            <tr><th>Année</th><td>{{ medium.annee }}</td></tr>
+            <tr><th>Description</th><td>{{ medium.description }}</td></tr>
+            <tr><th>Exemplaires</th><td>{{ medium.exemplaires }}</td></tr>
+            <tr><th>Disponibles</th><td>{{ medium.disponibles }}</td></tr>
+            <tr><th>Ajouté le</th><td>{{ medium.createdAt ? medium.createdAt|date('d/m/Y H:i') : '' }}</td></tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_media_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_media_edit', {'id': medium.id}) }}">Modifier</a>
+
+    {{ include('media/_delete_form.html.twig') }}
+{% endblock %}

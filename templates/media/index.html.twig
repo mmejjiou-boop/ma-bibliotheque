@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des médias{% endblock %}
+
+{% block body %}
+    <h1>Gestion des médias</h1>
+
+    {% for message in app.flashes('success') %}
+        <p style="color: green">{{ message }}</p>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <p style="color: red">{{ message }}</p>
+    {% endfor %}
+
+    <a href="{{ path('app_media_new') }}">Ajouter un média</a>
+
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Type</th>
+                <th>Genre</th>
+                <th>Année</th>
+                <th>Exemplaires</th>
+                <th>Disponibles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for medium in media %}
+            <tr>
+                <td>
+                    {% if medium.image %}
+                        <img src="{{ asset('uploads/images/' ~ medium.image) }}" alt="{{ medium.titre }}" width="60">
+                    {% endif %}
+                </td>
+                <td>{{ medium.titre }}</td>
+                <td>{{ medium.auteur }}</td>
+                <td>{{ medium.type }}</td>
+                <td>{{ medium.genre }}</td>
+                <td>{{ medium.annee }}</td>
+                <td>{{ medium.exemplaires }}</td>
+                <td>{{ medium.disponibles }}</td>
+                <td>
+                    <a href="{{ path('app_media_show', {'id': medium.id}) }}">Voir</a>
+                    <a href="{{ path('app_media_edit', {'id': medium.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucun média</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

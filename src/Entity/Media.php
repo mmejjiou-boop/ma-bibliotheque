@@ -48,12 +48,13 @@ class Media
      */
     #[ORM\OneToMany(targetEntity: Emprunt::class, mappedBy: 'media')]
     private Collection $emprunts;
-    
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->emprunts = new ArrayCollection();
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,12 +189,24 @@ class Media
     public function removeEmprunt(Emprunt $emprunt): static
     {
         if ($this->emprunts->removeElement($emprunt)) {
-            // set the owning side to null (unless already changed)
             if ($emprunt->getMedia() === $this) {
                 $emprunt->setMedia(null);
             }
         }
 
         return $this;
+    }
+
+    public function getDisponibles(): int
+    {
+        $enCours = 0;
+
+        foreach ($this->emprunts as $emprunt) {
+            if ($emprunt->isEnCours()) {
+                $enCours++;
+            }
+        }
+
+        return $this->exemplaires - $enCours;
     }
 }
