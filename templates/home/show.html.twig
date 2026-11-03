@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ media.titre }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_home') }}" class="text-indigo-600 hover:underline">&larr; Retour au catalogue</a>
+
+    <div class="bg-white rounded-xl shadow mt-4 p-6 flex flex-col md:flex-row gap-8">
+        {% if media.image %}
+            <img src="{{ asset('uploads/images/' ~ media.image) }}" alt="{{ media.titre }}" class="w-full md:w-64 h-96 object-cover rounded-lg">
+        {% else %}
+            <div class="w-full md:w-64 h-96 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center text-7xl">📚</div>
+        {% endif %}
+
+        <div class="flex-1">
+            <div class="flex gap-2 mb-3 text-sm">
+                <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded">{{ media.type }}</span>
+                <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded">{{ media.genre }}</span>
+            </div>
+
+            <h1 class="text-3xl font-bold">{{ media.titre }}</h1>
+            <p class="text-gray-500 mb-4">{{ media.auteur }} · {{ media.annee }}</p>
+
+            <p class="mb-6">{{ media.description }}</p>
+
+            <p class="mb-6">
+                {% if media.disponibles > 0 %}
+                    <span class="text-green-600 font-semibold">{{ media.disponibles }} exemplaire(s) disponible(s)</span>
+                {% else %}
+                    <span class="text-red-600 font-semibold">Aucun exemplaire disponible</span>
+                {% endif %}
+                <span class="text-gray-500">sur {{ media.exemplaires }}</span>
+            </p>
+        </div>
+    </div>
+{% endblock %}

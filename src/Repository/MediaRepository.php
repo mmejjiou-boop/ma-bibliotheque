@@ -16,28 +16,26 @@ class MediaRepository extends ServiceEntityRepository
         parent::__construct($registry, Media::class);
     }
 
-//    /**
-//     * @return Media[] Returns an array of Media objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function rechercher(?string $recherche, ?string $type, ?string $genre): array
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->orderBy('m.createdAt', 'DESC');
 
-//    public function findOneBySomeField($value): ?Media
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($recherche) {
+            $qb->andWhere('m.titre LIKE :recherche OR m.auteur LIKE :recherche')
+                ->setParameter('recherche', '%'.$recherche.'%');
+        }
+
+        if ($type) {
+            $qb->andWhere('m.type = :type')
+                ->setParameter('type', $type);
+        }
+
+        if ($genre) {
+            $qb->andWhere('m.genre = :genre')
+                ->setParameter('genre', $genre);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -1,0 +1,20 @@
+<a href="{{ path('app_catalogue_show', {id: media.id}) }}" class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden block">
+    {% if media.image %}
+        <img src="{{ asset('uploads/images/' ~ media.image) }}" alt="{{ media.titre }}" class="w-full h-64 object-cover">
+    {% else %}
+        <div class="w-full h-64 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-5xl">📚</div>
+    {% endif %}
+
+    <div class="p-4">
+        <div class="flex justify-between items-center mb-2 text-xs">
+            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded">{{ media.type }}</span>
+            {% if media.disponibles > 0 %}
+                <span class="text-green-600 font-semibold">Disponible</span>
+            {% else %}
+                <span class="text-red-600 font-semibold">Indisponible</span>
+            {% endif %}
+        </div>
+        <h2 class="font-semibold leading-tight">{{ media.titre }}</h2>
+        <p class="text-sm text-gray-500">{{ media.auteur }}</p>
+    </div>
+</a>

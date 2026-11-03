@@ -1,20 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Catalogue{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1 class="text-3xl font-bold mb-6">Catalogue</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <form method="get" action="{{ path('app_home') }}" class="flex flex-wrap gap-3 mb-6">
+        <input type="text" name="q" value="{{ recherche }}" placeholder="Rechercher un titre ou un auteur"
+               class="flex-1 min-w-[200px] border rounded-full px-4 py-2">
+        <select name="genre" class="border rounded-full px-4 py-2">
+            <option value="">Tous les genres</option>
+            {% for genre in genres %}
+                <option value="{{ genre }}" {{ genre == genreChoisi ? 'selected' }}>{{ genre }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="type" value="{{ typeChoisi }}">
+        <button class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700">Rechercher</button>
+    </form>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/MAMP/htdocs/ma-bibliotheque/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/MAMP/htdocs/ma-bibliotheque/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="flex flex-wrap gap-2 mb-8 text-sm">
+        <a href="{{ path('app_home', {q: recherche, genre: genreChoisi}) }}"
+           class="px-4 py-1 rounded-full {{ typeChoisi == '' ? 'bg-indigo-600 text-white' : 'bg-white border hover:bg-gray-100' }}">Tous</a>
+        {% for type in types %}
+            <a href="{{ path('app_home', {q: recherche, genre: genreChoisi, type: type}) }}"
+               class="px-4 py-1 rounded-full {{ typeChoisi == type ? 'bg-indigo-600 text-white' : 'bg-white border hover:bg-gray-100' }}">{{ type }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for media in medias %}
+            {{ include('home/_media_card.html.twig') }}
+        {% else %}
+            <p class="col-span-full text-center text-gray-500">Aucun média trouvé</p>
+        {% endfor %}
+    </div>
 {% endblock %}
