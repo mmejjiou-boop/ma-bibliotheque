@@ -29,8 +29,23 @@
                 {% else %}
                     <span class="text-red-600 font-semibold">Aucun exemplaire disponible</span>
                 {% endif %}
-                <span class="text-gray-500">sur {{ media.exemplaires }}</span>
+                                <span class="text-gray-500">sur {{ media.exemplaires }}</span>
             </p>
+
+            {% if app.user %}
+                {% if media.disponibles > 0 %}
+                    <form method="post" action="{{ path('app_emprunter', {id: media.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('emprunter' ~ media.id) }}">
+                        <button class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-full shadow hover:bg-indigo-700">
+                            Emprunter (retour sous 21 jours)
+                        </button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('app_login') }}" class="inline-block bg-gray-200 px-6 py-3 rounded-full hover:bg-gray-300">
+                    Connectez-vous pour emprunter
+                </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

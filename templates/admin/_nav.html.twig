@@ -17,6 +17,10 @@
        class="px-4 py-2 rounded-full {{ route starts with 'app_media' ? 'bg-white shadow font-semibold' : 'text-gray-600 hover:text-gray-900' }}">
         📚 Médias
     </a>
+    <a href="{{ path('app_admin_emprunts') }}"
+       class="px-4 py-2 rounded-full {{ route starts with 'app_admin_emprunts' ? 'bg-white shadow font-semibold' : 'text-gray-600 hover:text-gray-900' }}">
+        🔄 Emprunts
+    </a>
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <a href="{{ path('app_admin_users') }}"
            class="px-4 py-2 rounded-full {{ route starts with 'app_admin_users' ? 'bg-white shadow font-semibold' : 'text-gray-600 hover:text-gray-900' }}">

@@ -209,4 +209,9 @@ class Media
 
         return $this->exemplaires - $enCours;
     }
+
+    public function isDisponible(): bool
+    {
+        return $this->getDisponibles() > 0;
+    }
 }

@@ -42,6 +42,11 @@ class Emprunt
         return $this->dateRetour === null;
     }
 
+    public function isEnRetard(): bool
+    {
+        return $this->isEnCours() && $this->dateRetourPrevue < new \DateTimeImmutable('today');
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -25,6 +25,7 @@
                     {% endif %}
 
                     {% if app.user %}
+                        <a href="{{ path('app_mes_emprunts') }}" class="hover:underline">Mes emprunts</a>
                         <span class="text-indigo-200">{{ app.user.prenom }}</span>
                         <a href="{{ path('app_logout') }}" class="bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100">Déconnexion</a>
                     {% else %}

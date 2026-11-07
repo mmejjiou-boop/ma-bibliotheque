@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des emprunts{% endblock %}
+
+{% block body %}
+    {{ include('admin/_nav.html.twig') }}
+
+    <div class="flex flex-wrap gap-2 mb-4 text-sm">
+        {% for cle, libelle in filtres %}
+            <a href="{{ path('app_admin_emprunts', {'filtre': cle}) }}"
+               class="px-3 py-1 rounded-full {{ filtre == cle ? 'bg-indigo-600 text-white' : 'bg-white shadow text-gray-700 hover:bg-gray-100' }}">
+                {{ libelle }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="bg-white rounded-xl shadow overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-100 text-left">
+                <tr>
+                    <th class="px-4 py-3">Média</th>
+                    <th class="px-4 py-3">Emprunteur</th>
+                    <th class="px-4 py-3">Emprunté le</th>
+                    <th class="px-4 py-3">Retour prévu</th>
+                    <th class="px-4 py-3">Statut</th>
+                    <th class="px-4 py-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for emprunt in emprunts %}
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="px-4 py-2 font-semibold">{{ emprunt.media.titre }}</td>
+                    <td class="px-4 py-2">
+                        {{ emprunt.user.prenom }} {{ emprunt.user.nom }}
+                        <span class="block text-gray-500">{{ emprunt.user.email }}</span>
+                    </td>
+                    <td class="px-4 py-2">{{ emprunt.dateEmprunt|date('d/m/Y') }}</td>
+                    <td class="px-4 py-2">{{ emprunt.dateRetourPrevue|date('d/m/Y') }}</td>
+                    <td class="px-4 py-2">
+                        {% if not emprunt.enCours %}
+                            <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded">Rendu le {{ emprunt.dateRetour|date('d/m/Y') }}</span>
+                        {% elseif emprunt.enRetard %}
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded">En retard</span>
+                        {% else %}
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded">En cours</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-2">
+                        {% if emprunt.enCours %}
+                            <form method="post" action="{{ path('app_admin_emprunts_retour', {'id': emprunt.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('retour' ~ emprunt.id) }}">
+                                <input type="hidden" name="filtre" value="{{ filtre }}">
+                                <button class="bg-indigo-600 text-white px-3 py-1 rounded-full hover:bg-indigo-700">Enregistrer le retour</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="px-4 py-6 text-center text-gray-500">Aucun emprunt</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
