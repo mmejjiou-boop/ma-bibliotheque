@@ -33,11 +33,16 @@
             </p>
 
             {% if app.user %}
-                {% if media.disponibles > 0 %}
+                {% if dejaEmprunte %}
+                    <p class="text-indigo-700 font-semibold">
+                        Vous avez déjà emprunté ce média.
+                        <a href="{{ path('app_mes_emprunts') }}" class="underline">Voir mes emprunts</a>
+                    </p>
+                {% elseif media.disponibles > 0 %}
                     <form method="post" action="{{ path('app_emprunter', {id: media.id}) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('emprunter' ~ media.id) }}">
                         <button class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-full shadow hover:bg-indigo-700">
-                            Emprunter (retour sous 21 jours)
+                            Emprunter (retour sous {{ constant('App\\Entity\\Emprunt::DUREE_JOURS') }} jours)
                         </button>
                     </form>
                 {% endif %}

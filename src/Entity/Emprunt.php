@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EmpruntRepository::class)]
 class Emprunt
 {
+    public const DUREE_JOURS = 21;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -34,7 +36,7 @@ class Emprunt
     public function __construct()
     {
         $this->dateEmprunt = new \DateTimeImmutable();
-        $this->dateRetourPrevue = new \DateTimeImmutable('+21 days');
+        $this->dateRetourPrevue = new \DateTimeImmutable('+'.self::DUREE_JOURS.' days');
     }
 
     public function isEnCours(): bool

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Media;
+use App\Entity\User;
 use App\Form\MediaType;
+use App\Repository\EmpruntRepository;
 use App\Repository\MediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +32,13 @@ final class HomeController extends AbstractController
     }
 
     #[Route('/catalogue/{id}', name: 'app_catalogue_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function show(Media $media): Response
+    public function show(Media $media, EmpruntRepository $empruntRepository): Response
     {
+        $user = $this->getUser();
+
         return $this->render('home/show.html.twig', [
             'media' => $media,
+            'dejaEmprunte' => $user instanceof User && null !== $empruntRepository->findEnCoursPour($user, $media),
         ]);
     }
 }

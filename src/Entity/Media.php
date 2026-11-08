@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 class Media
@@ -17,9 +18,11 @@ class Media
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le titre est obligatoire')]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'auteur est obligatoire")]
     private ?string $auteur = null;
 
     #[ORM\Column(length: 20)]
@@ -29,12 +32,16 @@ class Media
     private ?string $genre = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1000, max: 2100, notInRangeMessage: "L'année doit être entre {{ min }} et {{ max }}")]
     private ?int $annee = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Positive(message: 'Il faut au moins 1 exemplaire')]
     private ?int $exemplaires = null;
 
     #[ORM\Column(length: 255, nullable: true)]
