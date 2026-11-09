@@ -12,7 +12,15 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body class="bg-gray-50 text-gray-800 min-h-screen">
+    {% set theme = app.user ? app.user.theme : 'clair' %}
+    <body class="bg-gray-50 text-gray-800 min-h-screen {{ theme == 'sombre' ? 'dark' }}">
+        {% if theme == 'auto' %}
+            <script>
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark');
+                }
+            </script>
+        {% endif %}
         <nav class="bg-indigo-700 text-white shadow">
             <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="{{ path('app_home') }}" class="text-xl font-bold">Ma Bibliothèque</a>
@@ -26,7 +34,10 @@
 
                     {% if app.user %}
                         <a href="{{ path('app_mes_emprunts') }}" class="hover:underline">Mes emprunts</a>
-                        <span class="text-indigo-200">{{ app.user.prenom }}</span>
+                        <a href="{{ path('app_profil') }}" class="flex items-center gap-2 text-indigo-200 hover:text-white">
+                            {{ include('_avatar.html.twig', {user: app.user}) }}
+                            {{ app.user.prenom }}
+                        </a>
                         <a href="{{ path('app_logout') }}" class="bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100">Déconnexion</a>
                     {% else %}
                         <a href="{{ path('app_login') }}" class="hover:underline">Connexion</a>

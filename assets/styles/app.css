@@ -1,3 +1,80 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Mode sombre : la classe "dark" est posée sur <body> selon le thème choisi dans le profil.
+ * Plutôt que d'ajouter des "dark:" partout dans les templates, on réécrit ici les couleurs claires utilisées.
+ */
+.dark.bg-gray-50,
+.dark .bg-gray-50 {
+    background-color: theme('colors.gray.900');
+}
+
+.dark,
+.dark .text-gray-800,
+.dark .text-gray-900 {
+    color: theme('colors.gray.100');
+}
+
+.dark .text-gray-700,
+.dark .text-gray-600 {
+    color: theme('colors.gray.300');
+}
+
+.dark .text-gray-500 {
+    color: theme('colors.gray.400');
+}
+
+.dark .bg-white {
+    background-color: theme('colors.gray.800');
+}
+
+.dark .bg-gray-100 {
+    background-color: theme('colors.gray.700');
+}
+
+.dark .bg-gray-200 {
+    background-color: theme('colors.gray.600');
+}
+
+.dark .bg-gray-300 {
+    background-color: theme('colors.gray.500');
+}
+
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover {
+    background-color: theme('colors.gray.700');
+}
+
+.dark .hover\:text-gray-900:hover {
+    color: theme('colors.white');
+}
+
+.dark .border,
+.dark .border-t,
+.dark .border-b {
+    border-color: theme('colors.gray.700');
+}
+
+.dark .text-indigo-600,
+.dark .text-indigo-700 {
+    color: theme('colors.indigo.300');
+}
+
+/* les boutons blancs du menu restent lisibles */
+.dark nav .bg-white {
+    background-color: theme('colors.indigo.100');
+}
+
+.dark nav .text-indigo-700 {
+    color: theme('colors.indigo.700');
+}
+
+.dark input:not([type=checkbox]):not([type=radio]):not([type=file]),
+.dark select,
+.dark textarea {
+    background-color: theme('colors.gray.700');
+    border-color: theme('colors.gray.600');
+    color: theme('colors.gray.100');
+}

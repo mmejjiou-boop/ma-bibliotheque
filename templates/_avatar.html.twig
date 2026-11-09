@@ -1,0 +1,7 @@
+{# Avatar rond : photo si elle existe, sinon les initiales. Variables : user, taille (classes Tailwind) #}
+{% set taille = taille|default('w-8 h-8 text-xs') %}
+{% if user.photo %}
+    <img src="{{ asset('uploads/avatars/' ~ user.photo) }}" alt="{{ user.prenom }}" class="{{ taille }} rounded-full object-cover">
+{% else %}
+    <span class="{{ taille }} rounded-full bg-indigo-200 text-indigo-800 font-bold inline-flex items-center justify-center">{{ user.initiales }}</span>
+{% endif %}

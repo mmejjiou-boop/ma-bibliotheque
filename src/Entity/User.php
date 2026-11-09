@@ -61,6 +61,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $ville = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+
+    // clair, sombre ou auto (suit le réglage du système)
+    #[ORM\Column(length: 10, options: ['default' => 'clair'])]
+    private string $theme = 'clair';
+
     /**
      * @var Collection<int, Emprunt>
      */
@@ -249,6 +256,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ville = $ville;
 
         return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getTheme(): string
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(string $theme): static
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getInitiales(): string
+    {
+        return mb_strtoupper(mb_substr((string) $this->prenom, 0, 1).mb_substr((string) $this->nom, 0, 1));
     }
 
     /**
