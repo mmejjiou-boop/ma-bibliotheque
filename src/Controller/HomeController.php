@@ -15,13 +15,26 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function index(Request $request, MediaRepository $mediaRepository): Response
+    public function index(MediaRepository $mediaRepository): Response
+    {
+        $nouveautes = [];
+        foreach (MediaType::TYPES as $type) {
+            $nouveautes[$type] = $mediaRepository->findNouveautes($type, 4);
+        }
+
+        return $this->render('home/index.html.twig', [
+            'nouveautes' => $nouveautes,
+        ]);
+    }
+
+    #[Route('/catalogue', name: 'app_catalogue', methods: ['GET'])]
+    public function catalogue(Request $request, MediaRepository $mediaRepository): Response
     {
         $recherche = $request->query->getString('q');
         $type = $request->query->getString('type');
         $genre = $request->query->getString('genre');
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('home/catalogue.html.twig', [
             'medias' => $mediaRepository->rechercher($recherche, $type, $genre),
             'recherche' => $recherche,
             'typeChoisi' => $type,

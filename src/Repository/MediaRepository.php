@@ -38,4 +38,15 @@ class MediaRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findNouveautes(string $type, int $limite): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.type = :type')
+            ->setParameter('type', $type)
+            ->orderBy('m.createdAt', 'DESC')
+            ->setMaxResults($limite)
+            ->getQuery()
+            ->getResult();
+    }
 }

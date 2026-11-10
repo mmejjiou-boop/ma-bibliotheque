@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="text-3xl font-bold mb-6">Catalogue</h1>
 
-    <form method="get" action="{{ path('app_home') }}" class="flex flex-wrap gap-3 mb-6">
+    <form method="get" action="{{ path('app_catalogue') }}" class="flex flex-wrap gap-3 mb-6">
         <input type="text" name="q" value="{{ recherche }}" placeholder="Rechercher un titre ou un auteur"
                class="flex-1 min-w-[200px] border rounded-full px-4 py-2">
         <select name="genre" class="border rounded-full px-4 py-2">
@@ -19,10 +19,10 @@
     </form>
 
     <div class="flex flex-wrap gap-2 mb-8 text-sm">
-        <a href="{{ path('app_home', {q: recherche, genre: genreChoisi}) }}"
+        <a href="{{ path('app_catalogue', {q: recherche, genre: genreChoisi}) }}"
            class="px-4 py-1 rounded-full {{ typeChoisi == '' ? 'bg-indigo-600 text-white' : 'bg-white border hover:bg-gray-100' }}">Tous</a>
         {% for type in types %}
-            <a href="{{ path('app_home', {q: recherche, genre: genreChoisi, type: type}) }}"
+            <a href="{{ path('app_catalogue', {q: recherche, genre: genreChoisi, type: type}) }}"
                class="px-4 py-1 rounded-full {{ typeChoisi == type ? 'bg-indigo-600 text-white' : 'bg-white border hover:bg-gray-100' }}">{{ type }}</a>
         {% endfor %}
     </div>

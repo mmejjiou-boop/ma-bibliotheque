@@ -3,7 +3,7 @@
 {% block title %}{{ media.titre }}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_home') }}" class="text-indigo-600 hover:underline">&larr; Retour au catalogue</a>
+    <a href="{{ path('app_catalogue') }}" class="text-indigo-600 hover:underline">&larr; Retour au catalogue</a>
 
     <div class="bg-white rounded-xl shadow mt-4 p-6 flex flex-col md:flex-row gap-8">
         {% if media.image %}

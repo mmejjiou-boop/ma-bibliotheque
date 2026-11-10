@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl p-8 md:p-12 mb-10 shadow">
+        <h1 class="text-3xl md:text-4xl font-bold mb-3">Bienvenue à Ma Bibliothèque</h1>
+        <p class="text-indigo-100 mb-6 max-w-2xl">Romans, BD, mangas, DVD… Découvrez les derniers arrivages et empruntez-les gratuitement.</p>
+
+        <form method="get" action="{{ path('app_catalogue') }}" class="flex flex-wrap gap-3 max-w-xl">
+            <input type="text" name="q" placeholder="Rechercher un titre ou un auteur"
+                   class="flex-1 min-w-[200px] rounded-full px-4 py-2 text-gray-900">
+            <button class="bg-white text-indigo-700 font-semibold px-5 py-2 rounded-full hover:bg-indigo-100">Rechercher</button>
+        </form>
+
+        {% if not app.user %}
+            <div class="flex flex-wrap gap-3 mt-6 text-sm">
+                <a href="{{ path('app_register') }}" class="bg-white text-indigo-700 font-semibold px-5 py-2 rounded-full hover:bg-indigo-100">Créer un compte</a>
+                <a href="{{ path('app_login') }}" class="border border-white px-5 py-2 rounded-full hover:bg-white/10">Se connecter</a>
+            </div>
+        {% endif %}
+    </section>
+
+    {% for type, medias in nouveautes %}
+        <section class="mb-10">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold">Nouveautés {{ type }}</h2>
+                <a href="{{ path('app_catalogue', {type: type}) }}" class="text-indigo-600 hover:underline text-sm">Tout voir &rarr;</a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for media in medias %}
+                    {{ include('home/_media_card.html.twig') }}
+                {% else %}
+                    <p class="col-span-full text-gray-500">Aucun {{ type|lower }} pour le moment</p>
+                {% endfor %}
+            </div>
+        </section>
+    {% endfor %}
+{% endblock %}
