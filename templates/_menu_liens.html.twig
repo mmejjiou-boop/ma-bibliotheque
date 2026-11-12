@@ -1,0 +1,18 @@
+<a href="{{ path('app_home') }}" class="hover:underline">Accueil</a>
+<a href="{{ path('app_catalogue') }}" class="hover:underline">Catalogue</a>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_admin') }}" class="hover:underline">Gestion des médias</a>
+{% endif %}
+
+{% if app.user %}
+    <a href="{{ path('app_mes_emprunts') }}" class="hover:underline">Mes emprunts</a>
+    <a href="{{ path('app_profil') }}" class="flex items-center gap-2 text-indigo-200 hover:text-white">
+        {{ include('_avatar.html.twig', {user: app.user}) }}
+        {{ app.user.prenom }}
+    </a>
+    <a href="{{ path('app_logout') }}" class="bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100">Déconnexion</a>
+{% else %}
+    <a href="{{ path('app_login') }}" class="hover:underline">Connexion</a>
+    <a href="{{ path('app_register') }}" class="bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100">Inscription</a>
+{% endif %}

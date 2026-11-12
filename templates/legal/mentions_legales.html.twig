@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales{% endblock %}
+
+{% block body %}
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Mentions légales</h1>
+        <p class="text-sm text-gray-500 mb-8">Dernière mise à jour : {{ 'now'|date('d/m/Y') }}</p>
+
+        <div class="bg-white rounded-xl shadow p-6 md:p-8 space-y-8">
+            <section>
+                <h2 class="text-xl font-semibold mb-3">1. Éditeur du site</h2>
+                <p class="mb-2">Le site <strong>Ma Bibliothèque</strong> est un projet réalisé dans le cadre de mon ratrapage de la formation en 2e année de Bachelor à SKOLAE (CEFIM).</p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-1">
+                    <li>Responsable de la publication : Mohamed-Amine MEJJIOU</li>
+                    <li>Statut : étudiant, projet non commercial</li>
+                    <li>Contact : mmejjiou@gmail.com></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold mb-3">2. Hébergement</h2>
+                <p>Le site est actuellement exécuté en environnement local à des fins de développement et de démonstration. En cas de mise en ligne, le nom, l'adresse et le contact de l'hébergeur seront indiqués ici.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold mb-3">3. Propriété intellectuelle</h2>
+                <p class="mb-2">Le code source et la mise en page du site sont la propriété de leur auteur.</p>
+                <p>Les titres, couvertures et descriptions des œuvres présentées dans le catalogue appartiennent à leurs auteurs et éditeurs respectifs. Ils sont utilisés uniquement à titre d'illustration dans un cadre pédagogique.</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold mb-3">4. Données personnelles</h2>
+                <p class="mb-3">Conformément au Règlement général sur la protection des données (RGPD), voici les informations sur les données collectées.</p>
+
+                <h3 class="font-semibold mb-1">Données collectées</h3>
+                <p class="mb-3 text-gray-700">Lors de l'inscription et dans le profil : nom, prénom, adresse e-mail, mot de passe (stocké chiffré, jamais en clair), date de naissance, téléphone, adresse postale et photo de profil. L'historique des emprunts est également conservé.</p>
+
+                <h3 class="font-semibold mb-1">Finalité</h3>
+                <p class="mb-3 text-gray-700">Ces données servent uniquement à gérer les comptes utilisateurs et les emprunts de médias. Elles ne sont ni vendues, ni transmises à des tiers.</p>
+
+                <h3 class="font-semibold mb-1">Durée de conservation</h3>
+                <p class="mb-3 text-gray-700">Les données sont conservées tant que le compte est actif.</p>
+
+                <h3 class="font-semibold mb-1">Vos droits</h3>
+                <p class="text-gray-700">Vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Vous pouvez modifier vos informations depuis votre page profil, ou contacter le responsable du site pour toute autre demande. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold mb-3">5. Cookies</h2>
+                <p>Le site utilise uniquement un cookie de session, indispensable pour rester connecté. Aucun cookie publicitaire ni de mesure d'audience n'est déposé, c'est pourquoi aucun bandeau de consentement n'est nécessaire.</p>
+            </section>
+        </div>
+    </div>
+{% endblock %}

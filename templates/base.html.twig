@@ -21,29 +21,28 @@
                 }
             </script>
         {% endif %}
-        <nav class="bg-indigo-700 text-white shadow">
+        <nav class="bg-indigo-700 text-white shadow" data-controller="menu">
             <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="{{ path('app_home') }}" class="text-xl font-bold">Ma Bibliothèque</a>
 
-                <div class="flex items-center gap-4 text-sm">
-                    <a href="{{ path('app_home') }}" class="hover:underline">Accueil</a>
-                    <a href="{{ path('app_catalogue') }}" class="hover:underline">Catalogue</a>
+                <button type="button" class="md:hidden p-2 rounded hover:bg-indigo-600"
+                        data-action="menu#basculer" aria-controls="menu-principal" aria-expanded="false" aria-label="Ouvrir le menu">
+                    <svg data-menu-target="ouvrir" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg data-menu-target="fermer" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+                    </svg>
+                </button>
 
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('app_admin') }}" class="hover:underline">Gestion des médias</a>
-                    {% endif %}
+                <div class="hidden md:flex items-center gap-4 text-sm">
+                    {{ include('_menu_liens.html.twig') }}
+                </div>
+            </div>
 
-                    {% if app.user %}
-                        <a href="{{ path('app_mes_emprunts') }}" class="hover:underline">Mes emprunts</a>
-                        <a href="{{ path('app_profil') }}" class="flex items-center gap-2 text-indigo-200 hover:text-white">
-                            {{ include('_avatar.html.twig', {user: app.user}) }}
-                            {{ app.user.prenom }}
-                        </a>
-                        <a href="{{ path('app_logout') }}" class="bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100">Déconnexion</a>
-                    {% else %}
-                        <a href="{{ path('app_login') }}" class="hover:underline">Connexion</a>
-                        <a href="{{ path('app_register') }}" class="bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100">Inscription</a>
-                    {% endif %}
+            <div id="menu-principal" data-menu-target="panneau" class="hidden md:hidden border-t border-indigo-600">
+                <div class="px-4 py-4 flex flex-col items-start gap-4 text-base">
+                    {{ include('_menu_liens.html.twig') }}
                 </div>
             </div>
         </nav>
@@ -58,5 +57,12 @@
 
             {% block body %}{% endblock %}
         </main>
+
+        <footer class="border-t mt-12">
+            <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap justify-between gap-2 text-sm text-gray-500">
+                <p>&copy; {{ 'now'|date('Y') }} Ma Bibliothèque</p>
+                <a href="{{ path('app_mentions_legales') }}" class="hover:underline">Mentions légales</a>
+            </div>
+        </footer>
     </body>
 </html>

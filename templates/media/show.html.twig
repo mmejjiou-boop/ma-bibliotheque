@@ -3,27 +3,32 @@
 {% block title %}{{ medium.titre }}{% endblock %}
 
 {% block body %}
-    <h1>{{ medium.titre }}</h1>
+    {{ include('admin/_nav.html.twig') }}
 
-    {% if medium.image %}
-        <img src="{{ asset('uploads/images/' ~ medium.image) }}" alt="{{ medium.titre }}" width="200">
-    {% endif %}
+    <div class="bg-white rounded-xl shadow p-6 flex flex-col md:flex-row gap-8">
+        {% if medium.image %}
+            <img src="{{ asset('uploads/images/' ~ medium.image) }}" alt="{{ medium.titre }}" class="w-full md:w-56 h-80 object-cover rounded-lg">
+        {% endif %}
 
-    <table border="1" cellpadding="5">
-        <tbody>
-            <tr><th>Auteur / Réalisateur</th><td>{{ medium.auteur }}</td></tr>
-            <tr><th>Type</th><td>{{ medium.type }}</td></tr>
-            <tr><th>Genre</th><td>{{ medium.genre }}</td></tr>
-            <tr><th>Année</th><td>{{ medium.annee }}</td></tr>
-            <tr><th>Description</th><td>{{ medium.description }}</td></tr>
-            <tr><th>Exemplaires</th><td>{{ medium.exemplaires }}</td></tr>
-            <tr><th>Disponibles</th><td>{{ medium.disponibles }}</td></tr>
-            <tr><th>Ajouté le</th><td>{{ medium.createdAt ? medium.createdAt|date('d/m/Y H:i') : '' }}</td></tr>
-        </tbody>
-    </table>
+        <div class="flex-1 min-w-0">
+            <h2 class="text-2xl font-bold mb-4 break-words">{{ medium.titre }}</h2>
 
-    <a href="{{ path('app_media_index') }}">Retour à la liste</a>
-    <a href="{{ path('app_media_edit', {'id': medium.id}) }}">Modifier</a>
+            <dl class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 text-sm">
+                <dt class="font-semibold text-gray-600">Auteur / Réalisateur</dt><dd>{{ medium.auteur }}</dd>
+                <dt class="font-semibold text-gray-600">Type</dt><dd>{{ medium.type }}</dd>
+                <dt class="font-semibold text-gray-600">Genre</dt><dd>{{ medium.genre }}</dd>
+                <dt class="font-semibold text-gray-600">Année</dt><dd>{{ medium.annee }}</dd>
+                <dt class="font-semibold text-gray-600">Description</dt><dd class="break-words">{{ medium.description }}</dd>
+                <dt class="font-semibold text-gray-600">Exemplaires</dt><dd>{{ medium.exemplaires }}</dd>
+                <dt class="font-semibold text-gray-600">Disponibles</dt><dd>{{ medium.disponibles }}</dd>
+                <dt class="font-semibold text-gray-600">Ajouté le</dt><dd>{{ medium.createdAt ? medium.createdAt|date('d/m/Y H:i') : '' }}</dd>
+            </dl>
 
-    {{ include('media/_delete_form.html.twig') }}
+            <div class="flex flex-wrap items-center gap-3 mt-6">
+                <a href="{{ path('app_media_index') }}" class="bg-white border px-5 py-2 rounded-full hover:bg-gray-100">Retour à la liste</a>
+                <a href="{{ path('app_media_edit', {'id': medium.id}) }}" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700">Modifier</a>
+                {{ include('media/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
